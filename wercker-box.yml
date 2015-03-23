@@ -1,0 +1,23 @@
+name: zendserver
+version: 8.0.2
+inherits: wercker/ubuntu12.04-webessentials@0.0.3
+type: service
+platform: ubuntu@12.04
+description: wercker box for Zend Server
+keywords:
+  - php
+  - zend
+  - zendserver
+packages:
+  - zendserver@8.0.2
+script: |
+  sudo apt-get -y install wget
+  sudo wget http://downloads.zend.com/zendserver/8.0.2/ZendServer-8.0.2-RepositoryInstaller-linux.tar.gz -O zs.tar.gz
+  sudo tar -xzvf zs.tar.gz
+  sudo ZendServer-RepositoryInstaller-linux/install_zs.sh 5.6 nginx --automatic
+  
+env:
+  WERCKER_ZENDSERVER_PORT: 10081
+  WERCKER_ZENDSERVER_HOST: $$HOST$$
+  WERCKER_ZENDSERVER_URL: $$HOST$$:28015
+  WERCKER_ZENDSERVER_VERSION: "8.0.2"
